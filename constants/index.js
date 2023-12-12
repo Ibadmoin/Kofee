@@ -1,6 +1,3 @@
-// we will be using this dummy data,
-// don't worry, you can find this data in the git repo 
-// you can find the git repo link in the description ;)
 
 export const categories = [
   {

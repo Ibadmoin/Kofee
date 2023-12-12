@@ -3,9 +3,20 @@ import {View, Text, StatusBar, Image, Dimensions, SafeAreaView, TextInput, Touch
 import { AcademicCapIcon, MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/solid";
 import { themeColors } from '../theme';
 import {BellIcon} from "react-native-heroicons/outline"
-import { categories } from '../constants';
+import { categories, coffeeItems } from '../constants';
+import Carousel from 'react-native-snap-carousel'
+import CoffeeCard from '../components/CoffeeCard';
+import { ScrollView } from 'react-native';
 
 
+const data = {
+  name:"cofee",
+  image:require('../assets/images/coffee1.png'),
+  stars: 4.5,
+  price: 50,
+  volume:5.7
+
+}
 const {width, height } = Dimensions.get('window')
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
@@ -28,7 +39,7 @@ export default function HomeScreen() {
            {/* using svg for now */}
           <MapPinIcon size='25' color={themeColors.bgLight} />
           <Text className="font-semibold text-base">
-            Karachi, Pak
+            Khi, Pakistan
           </Text>
           </View>
           <BellIcon size="27" color="black" />
@@ -70,10 +81,29 @@ export default function HomeScreen() {
             }}
             />
           </View>
-
-
-    
         </SafeAreaView>
+        {/* Coffee cards */}
+   
+      <ScrollView  >
+      <View style={{ overflow: 'visible', }}>
+        <View style={{ backgroundColor: "transparent", flexDirection: 'row', }}>
+          <FlatList
+            style={{padding:8}}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            data={coffeeItems}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (item.isEmpty ? <View style={{ width: 10 }} /> : <CoffeeCard item={item} />)}
+            ItemSeparatorComponent={() => <View style={{ width: 10,}} />} 
+          />
+        </View>
+      </View>
+    </ScrollView>
+     
+
+          
+
+     
     </View>
 
    

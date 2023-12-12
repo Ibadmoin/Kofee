@@ -24,13 +24,13 @@ export default function HomeScreen() {
     <View>
         <StatusBar />
         <Image source={require('../assets/images/beansBackground1.png')} 
-        style={{height: height*0.3,}}
+        style={{height: height*0.28,}}
         className="w-full absolute -top-5 opacity-10"
        
         />
 
         <SafeAreaView>
-          <View className="mt-2 mx-4 flex-row justify-between items-center " >
+          <View className="mt-2 mx-4 flex-row justify-between items-center  " >
             <Image 
             
             className="h-9 w-9 rounded-full "
@@ -45,7 +45,7 @@ export default function HomeScreen() {
           <BellIcon size="27" color="black" />
           </View>
           {/* Search bar */}
-          <View className="mx-5 shadow" style={{marginTop:height*0.06}}>
+          <View className="mx-5 shadow" style={{marginTop:height*0.03}}>
             <View className="flex-row items-center rounded-full p-1 bg-[#e6e6e6]">
               <TextInput style={{ flex:0.8}} placeholder='Search' className="p-4 font-semibold text-gray-700" />
               <TouchableOpacity 

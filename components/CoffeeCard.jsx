@@ -36,7 +36,7 @@ export default function CoffeeCard({item}) {
         </View>
         <View className={`px-5 flex-1 justify-between ${ios?'mt-5':''}`}>
             <View className="space-y-3 mt-3">
-                <Text className="text=3xl text-white font-semibold z-10">{item.name}</Text>
+                <Text className="text-3xl text-white font-bold ">{item.name}</Text>
                 <View
                     style={{backgroundColor:'rgba(255,255,255,0.2)'}}
                     className="flex-row items-center rounded-3xl p-1 px-2 space-x-1 w-16"

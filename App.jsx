@@ -4,12 +4,14 @@ import CoffeeCard from "./components/CoffeeCard";
 import { coffeeItems } from "./constants";
 import { ScrollView } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
+import ProductScreen from "./screens/ProductScreen";
 
 const { width, height } = Dimensions.get('window');
 
 const App = () => {
   return (
-  <HomeScreen />
+  // <HomeScreen />
+  <ProductScreen />
   );
 };
 

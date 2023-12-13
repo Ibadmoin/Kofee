@@ -11,13 +11,17 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
+    "@react-navigation/native": "^6.1.9",
     "@types/react-native-snap-carousel": "^3.8.9",
+    "feather-icons": "^4.29.1",
     "gradlew": "^0.0.1-security",
     "nativewind": "^2.0.11",
     "prop-type": "^0.0.1",
     "react": "18.2.0",
     "react-native": "0.73.0",
     "react-native-heroicons": "^3.2.0",
+    "react-native-safe-area-context": "^4.8.1",
+    "react-native-screens": "^3.29.0",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^14.1.0",
     "react-native-vector-icons": "^10.0.2",

@@ -25,10 +25,10 @@ const {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
 
 export default function ProductScreen(props) {
-  // const item = props.route.params;
+  const item = props.route.params;
   const [size, setSize] = useState('small');
   const [quantity, setQuantity]= useState(4)
-  // const navigation = useNavigation()
+  const navigation = useNavigation()
   return (
     <View className="flex-1">
       <StatusBar barStyle={'light-content'} />
@@ -45,7 +45,7 @@ export default function ProductScreen(props) {
         <View className="mx-4 flex-row  justify-between  items-center">
           <TouchableOpacity
             className="rounded-full"
-            onPress={() => console.warn('back Screen')}>
+            onPress={()=> navigation.goBack()}>
             <ArrowLeftCircleIcon size={50} color="white" strokeWidth={1.2} />
           </TouchableOpacity>
 
@@ -63,7 +63,7 @@ export default function ProductScreen(props) {
           }}
           className="flex-row justify-center ">
           <Image
-            source={require('../assets/images/coffee1.png')}
+            source={item.image}
             className="h-60 w-60 "
             style={{marginTop: ios ? 0 : 0}}
           />
@@ -73,18 +73,18 @@ export default function ProductScreen(props) {
           style={{backgroundColor: themeColors.bgLight}}
           className="flex-row justify-center items-center mx-4 rounded-3xl p-1 px-2 space-x-1 opacity-90 w-16">
           <StarIcon size={15} color="white" />
-          <Text className="text-base font-semibold text-white">5</Text>
+          <Text className="text-base font-semibold text-white">{item.stars}</Text>
         </View>
         <View className="px-4 flex-row justify-between items-center">
           <Text
             style={{color: themeColors.text}}
             className="text-3xl font-semibold ">
-            Cappicino
+           {item.name}
           </Text>
           <Text
             style={{color: themeColors.text}}
             className="text-lg font-semibold ">
-            $ 20.00
+            $ {item.price}
           </Text>
         </View>
         <View className="px-4 space-y-2">
@@ -124,17 +124,17 @@ export default function ProductScreen(props) {
         </View>
         <View className="px-4 space-y-2">
             <Text style={{color:themeColors.text}} className="text-lg font-bold">About</Text>
-            <Text  className="text-gray-600 mb-10"> labore magnam, perferendis at nesciunt dolore, in ipsa optio, velit dolor fuga praesentium quam sequi tempore eum aspernatur sint!</Text>
+            <Text  className="text-gray-600 mb-10"> {item.desc}</Text>
         </View>
         </ScrollView>
       </SafeAreaView>
               <View className={`space-y-3 ${ios? 'mb-6': 'mb-3'}`}>
           <View className="flex-row justify-between items-center px-2 -mb-4 " >
-              <View className="flex-row items-center space-x-1">
+              <View className="flex-col justify-center items-center space-x-2 mx-2">
                 <Text className="text-base text-gray-700 font-semibold opacity-60">
-                  Volume 
+                Volume 
                 </Text>
-                <Text className="text-base text-black font-semibold"> {5}</Text>
+                <Text className="text-base text-black font-semibold">{item.volume}</Text>
               </View>
               <View className="flex-row justify-center rounded-full p-3 m-3 " style={{backgroundColor:themeColors.bgDark,width:130}}>
                 <TouchableOpacity>

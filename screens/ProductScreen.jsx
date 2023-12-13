@@ -141,8 +141,8 @@ export default function ProductScreen(props) {
                 <Text className="text-white text-base">Buy Now</Text>
                 </TouchableOpacity>
               </View>
-              <View 
-                className="flex-row items-center space-x-4 border-gray-500 border rounded-full p-1 px-4">
+              <View style={{ borderWidth: 2, borderColor: "gray" }} 
+                className="flex-row items-center space-x-4   rounded-full p-1 px-4">
                 <TouchableOpacity>
                   <MinusIcon size="20" strokeWidth={3} color={themeColors.text} onPress={()=>quantity>1?setQuantity(quantity- 1):setQuantity(1)} />
                 </TouchableOpacity>

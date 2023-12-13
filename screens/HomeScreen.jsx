@@ -56,8 +56,11 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </View>
           </View>
+          </SafeAreaView>
+   
 
-          {/* Categories */}
+          <ScrollView>
+            {/* Categories */}
           <View className="px-5 mt-6 ">
             <FlatList
             horizontal
@@ -81,10 +84,10 @@ export default function HomeScreen() {
             }}
             />
           </View>
-        </SafeAreaView>
+       
         {/* Coffee cards */}
    
-      <ScrollView  >
+    
       <View style={{ overflow: 'visible', }}>
         <View style={{ backgroundColor: "transparent", flexDirection: 'row', }}>
           <FlatList
@@ -98,7 +101,10 @@ export default function HomeScreen() {
           />
         </View>
       </View>
-    </ScrollView>
+      {/* Added more needed scrollable content/Comp here... */}
+    
+          </ScrollView>
+    
      
 
           

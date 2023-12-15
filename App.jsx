@@ -6,14 +6,18 @@ import { ScrollView } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import AppNavigation from "./navigation/AppNavigation";
+import SkeletonLoader from "./components/skeleton/ScoffeeCard";
 
 const { width, height } = Dimensions.get('window');
 
 const App = () => {
   return (
-  // // <HomeScreen />
+  // <HomeScreen />
   // <ProductScreen />
+  
   <AppNavigation />
+
+  
   );
 };
 

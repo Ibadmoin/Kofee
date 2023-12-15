@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {View, Text, StatusBar, Image, Dimensions, SafeAreaView, TextInput, TouchableOpacity, FlatList} from 'react-native'
 import { AcademicCapIcon, MagnifyingGlassIcon, MapPinIcon } from "react-native-heroicons/solid";
 import { themeColors } from '../theme';
@@ -7,6 +7,7 @@ import { categories, coffeeItems } from '../constants';
 import Carousel from 'react-native-snap-carousel'
 import CoffeeCard from '../components/CoffeeCard';
 import { ScrollView } from 'react-native';
+import SkeletonLoader from '../components/skeleton/ScoffeeCard';
 
 
 const data = {
@@ -20,6 +21,12 @@ const data = {
 const {width, height } = Dimensions.get('window')
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
+  const [loader, setLoader] = useState(true);
+
+  useEffect(()=>{
+    setTimeout(() => {setLoader(false)},2000)
+
+  },[])
   return (
     <View>
         <StatusBar />
@@ -88,7 +95,15 @@ export default function HomeScreen() {
         {/* Coffee cards */}
    
     
-      <View style={{ overflow: 'visible', }}>
+     
+     {loader?( <View style={{ overflow: 'visible', }}>
+        <View style={{ backgroundColor: "transparent", flexDirection: 'row', }}>
+         <ScrollView horizontal showsHorizontalScrollIndicator={false} >
+         <SkeletonLoader loading={loader} /> 
+         <SkeletonLoader loading={loader} /> 
+         </ScrollView>
+        </View>
+      </View>):( <View style={{ overflow: 'visible', }}>
         <View style={{ backgroundColor: "transparent", flexDirection: 'row', }}>
           <FlatList
             style={{padding:8}}
@@ -100,7 +115,7 @@ export default function HomeScreen() {
             ItemSeparatorComponent={() => <View style={{ width: 10,}} />} 
           />
         </View>
-      </View>
+      </View>)}
       {/* Added more needed scrollable content/Comp here... */}
     
           </ScrollView>

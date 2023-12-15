@@ -8,25 +8,36 @@ import Carousel from 'react-native-snap-carousel'
 import CoffeeCard from '../components/CoffeeCard';
 import { ScrollView } from 'react-native';
 import SkeletonLoader from '../components/skeleton/ScoffeeCard';
+import axios from 'axios';
 
-
-const data = {
-  name:"cofee",
-  image:require('../assets/images/coffee1.png'),
-  stars: 4.5,
-  price: 50,
-  volume:5.7
-
-}
 const {width, height } = Dimensions.get('window')
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
   const [loader, setLoader] = useState(true);
+  const [data, setData]= useState(null);
+
+
 
   useEffect(()=>{
-    setTimeout(() => {setLoader(false)},2000)
+    const fetchData = async()=>{
+      try{
+        const response = await axios.get('http://192.168.100.25:8000/api/data/coffeeitems')
+        setData(response.data);
 
+ 
+       
+        setLoader(false)
+      }catch (err){
+        console.log(`Error: ${err}`);
+      }
+    }
+    // setTimeout(() => {setLoader(false)},2000)
+fetchData();
   },[])
+
+
+
+  // const coffeeItems = data.coffeeItems;
   return (
     <View>
         <StatusBar />
@@ -109,7 +120,7 @@ export default function HomeScreen() {
             style={{padding:8}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={coffeeItems}
+            data={data.coffeeItems}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (item.isEmpty ? <View style={{ width: 10 }} /> : <CoffeeCard item={item} />)}
             ItemSeparatorComponent={() => <View style={{ width: 10,}} />} 

@@ -1,14 +1,19 @@
 import {View, Text, Image, TouchableOpacity, Dimensions, Platform} from 'react-native'
 import { themeColors } from '../theme'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StarIcon } from 'react-native-heroicons/solid'
 import { PlusIcon } from 'react-native-heroicons/outline'
+import axios from 'axios'
 
 const {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
 export default function CoffeeCard({item}) {
+
     const navigation = useNavigation();
+   
+    const images = require('../assets/images/coffee1.png')
+    console.log(images)
     
   return (
     <View
@@ -30,7 +35,7 @@ export default function CoffeeCard({item}) {
             className="flex-row justify-center"
         >
              <Image 
-                source={item.image}
+                source={images}
                 className="h-20 w-20  top-35 p-0 "
             />
         </View>

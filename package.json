@@ -14,6 +14,7 @@
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "@types/react-native-snap-carousel": "^3.8.9",
+    "axios": "^1.6.2",
     "feather-icons": "^4.29.1",
     "gradlew": "^0.0.1-security",
     "nativewind": "^2.0.11",

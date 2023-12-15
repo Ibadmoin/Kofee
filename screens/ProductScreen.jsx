@@ -84,7 +84,7 @@ export default function ProductScreen(props) {
           <Text
             style={{color: themeColors.text}}
             className="text-lg font-semibold ">
-            $ {item.price}
+            $ {size==="large"?(Number(item.price)+10).toFixed(2):size=="medium"?(Number(item.price)+5).toFixed(2):item.price}
           </Text>
         </View>
         <View className="px-4 space-y-2">
@@ -134,7 +134,7 @@ export default function ProductScreen(props) {
                 <Text className="text-base text-gray-700 font-semibold opacity-60">
                 Volume 
                 </Text>
-                <Text className="text-base text-black font-semibold">{item.volume}</Text>
+                <Text className="text-base text-black font-semibold">{(item.volume)}</Text>
               </View>
               <View className="flex-row justify-center rounded-full p-3 m-3 " style={{backgroundColor:themeColors.bgDark,width:130}}>
                 <TouchableOpacity>

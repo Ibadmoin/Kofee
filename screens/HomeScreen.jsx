@@ -21,8 +21,9 @@ export default function HomeScreen() {
   useEffect(()=>{
     const fetchData = async()=>{
       try{
-        const response = await axios.get('http://192.168.100.25:8000/api/data/coffeeitems')
+        const response = await axios.get('https://gray-gleaming-tick.cyclic.app/api/product')
         setData(response.data);
+        console.log(response.data)
 
  
        
@@ -120,8 +121,8 @@ fetchData();
             style={{padding:8}}
             horizontal
             showsHorizontalScrollIndicator={false}
-            data={data.coffeeItems}
-            keyExtractor={(item) => item.id.toString()}
+            data={data}
+            keyExtractor={(item) => item._id}
             renderItem={({ item }) => (item.isEmpty ? <View style={{ width: 10 }} /> : <CoffeeCard item={item} />)}
             ItemSeparatorComponent={() => <View style={{ width: 10,}} />} 
           />

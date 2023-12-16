@@ -63,7 +63,7 @@ export default function ProductScreen(props) {
           }}
           className="flex-row justify-center ">
           <Image
-            source={item.image}
+            source={{uri:item.imageUrl}}
             className="h-60 w-60 "
             style={{marginTop: ios ? 0 : 0}}
           />
@@ -124,7 +124,7 @@ export default function ProductScreen(props) {
         </View>
         <View className="px-4 space-y-2">
             <Text style={{color:themeColors.text}} className="text-lg font-bold">About</Text>
-            <Text  className="text-gray-600 mb-10"> {item.desc}</Text>
+            <Text  className="text-gray-600 mb-10"> {item.description}</Text>
         </View>
         </ScrollView>
       </SafeAreaView>

@@ -12,8 +12,8 @@ export default function CoffeeCard({item}) {
 
     const navigation = useNavigation();
    
-    const images = require('../assets/images/coffee1.png')
-    console.log(images)
+    
+
     
   return (
     <View
@@ -35,7 +35,7 @@ export default function CoffeeCard({item}) {
             className="flex-row justify-center"
         >
              <Image 
-                source={images}
+                source={{uri:item.imageUrl}}
                 className="h-20 w-20  top-35 p-0 "
             />
         </View>

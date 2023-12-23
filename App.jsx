@@ -16,8 +16,8 @@ const App = () => {
   // <HomeScreen />
   // <ProductScreen />
   
-  // <AppNavigation />
-  <ItemScreen />
+  <AppNavigation />
+  // <ItemScreen />
 
   
   );

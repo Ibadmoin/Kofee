@@ -8,6 +8,7 @@ import { themeColors } from '../theme';
 
 import {HomeIcon as HomeOutline, HeartIcon as HeartOutline, ShoppingBagIcon as BagOutline } from 'react-native-heroicons/outline';
 import {HomeIcon as HomeSolid, HeartIcon as HeartSolid, ShoppingBagIcon as BagSolid} from 'react-native-heroicons/solid';
+import WelcomeScreen from '../screens/WelcomeScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -20,11 +21,12 @@ LogBox.ignoreLogs([
 export default function AppNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{
+      <Stack.Navigator initialRouteName='Welcome' screenOptions={{
         contentStyle: {backgroundColor: 'white'}
       }}>
         <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen} />
         <Stack.Screen name="Product" options={{headerShown: false}} component={ProductScreen} />
+        <Stack.Screen name="Welcome" options={{headerShown: false}} component={WelcomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

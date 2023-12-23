@@ -9,6 +9,7 @@ import { themeColors } from '../theme';
 import {HomeIcon as HomeOutline, HeartIcon as HeartOutline, ShoppingBagIcon as BagOutline } from 'react-native-heroicons/outline';
 import {HomeIcon as HomeSolid, HeartIcon as HeartSolid, ShoppingBagIcon as BagSolid} from 'react-native-heroicons/solid';
 import WelcomeScreen from '../screens/WelcomeScreen';
+import ItemScreen from '../screens/ItemScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -27,6 +28,7 @@ export default function AppNavigation() {
         <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen} />
         <Stack.Screen name="Product" options={{headerShown: false}} component={ProductScreen} />
         <Stack.Screen name="Welcome" options={{headerShown: false}} component={WelcomeScreen} />
+        <Stack.Screen name="Item" options={{headerShown: false}} component={ItemScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

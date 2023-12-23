@@ -9,13 +9,14 @@ import CoffeeCard from '../components/CoffeeCard';
 import { ScrollView } from 'react-native';
 import SkeletonLoader from '../components/skeleton/ScoffeeCard';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const {width, height } = Dimensions.get('window')
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
   const [loader, setLoader] = useState(true);
   const [data, setData]= useState(null);
-
+  const navigation = useNavigation()
 
 
   useEffect(()=>{
@@ -92,7 +93,13 @@ fetchData();
               let activeTextClass = isActive? 'text-white':'text-gray-700';
               return(
                 <TouchableOpacity 
-                onPress={()=>{setActiveCategory(item.id)}}
+                onPress={()=>{setActiveCategory(item.id);
+                  navigation.navigate("Item", {
+                     queryItem: item.title
+                  })
+                  
+               
+                }}
                 style={{backgroundColor:isActive? themeColors.bgLight:'rgba(0,0,0,0.07)' }}
                 className="p-4 px-5 mr-2 rounded-full ">
                   <Text className={"font-smiebold "+activeTextClass}>

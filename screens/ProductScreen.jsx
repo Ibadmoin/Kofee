@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -27,7 +27,22 @@ const ios = Platform.OS == 'ios';
 export default function ProductScreen(props) {
   const item = props.route.params;
   const [size, setSize] = useState('small');
-  const [quantity, setQuantity]= useState(4)
+  const [quantity, setQuantity]= useState(1);
+  const [favourite, setFavourite]= useState(false);
+
+
+  const handleFavaouriteItem =async ()=>{
+    
+      setFavourite(!favourite);
+      // add to favoite item
+      
+    
+  }
+  useEffect(()=>{
+  //  debugger
+
+  })
+
   const navigation = useNavigation()
   return (
     <View className="flex-1">
@@ -49,8 +64,8 @@ export default function ProductScreen(props) {
             <ArrowLeftCircleIcon size={50} color="white" strokeWidth={1.2} />
           </TouchableOpacity>
 
-          <TouchableOpacity className="rounded-full border-2 border-white p-2">
-            <HeartIcon size={24} color="white" />
+          <TouchableOpacity onPress={handleFavaouriteItem} className="rounded-full border-2 border-white p-2">
+            <HeartIcon size={24} color={favourite?'red':'white'} />
           </TouchableOpacity>
         </View>
         <View

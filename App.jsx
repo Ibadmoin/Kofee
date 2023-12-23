@@ -4,6 +4,7 @@ import CoffeeCard from "./components/CoffeeCard";
 import { coffeeItems } from "./constants";
 import { ScrollView } from "react-native";
 import HomeScreen from "./screens/HomeScreen";
+import ItemScreen from "./screens/ItemScreen";
 import ProductScreen from "./screens/ProductScreen";
 import AppNavigation from "./navigation/AppNavigation";
 import SkeletonLoader from "./components/skeleton/ScoffeeCard";
@@ -15,7 +16,8 @@ const App = () => {
   // <HomeScreen />
   // <ProductScreen />
   
-  <AppNavigation />
+  // <AppNavigation />
+  <ItemScreen />
 
   
   );

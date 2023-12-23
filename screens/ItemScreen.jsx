@@ -10,8 +10,9 @@ import { ScrollView } from 'react-native';
 import SkeletonLoader from '../components/skeleton/ScoffeeCard';
 import axios from 'axios';
 
+
 const {width, height } = Dimensions.get('window')
-export default function HomeScreen() {
+export default function ItemScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
   const [loader, setLoader] = useState(true);
   const [data, setData]= useState(null);
@@ -108,26 +109,7 @@ fetchData();
    
     
      
-     {loader?( <View style={{ overflow: 'visible', }}>
-        <View style={{ backgroundColor: "transparent", flexDirection: 'row', }}>
-         <ScrollView horizontal showsHorizontalScrollIndicator={false} >
-         <SkeletonLoader loading={loader} /> 
-         <SkeletonLoader loading={loader} /> 
-         </ScrollView>
-        </View>
-      </View>):( <View style={{ overflow: 'visible', }}>
-        <View style={{ backgroundColor: "transparent", flexDirection: 'row', }}>
-          <FlatList
-            style={{padding:8}}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={data}
-            keyExtractor={(item) => item._id}
-            renderItem={({ item }) => (item.isEmpty ? <View style={{ width: 10 }} /> : <CoffeeCard item={item} />)}
-            ItemSeparatorComponent={() => <View style={{ width: 10,}} />} 
-          />
-        </View>
-      </View>)}
+
       {/* Added more needed scrollable content/Comp here... */}
     
           </ScrollView>

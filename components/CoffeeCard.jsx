@@ -9,6 +9,7 @@ import axios from 'axios'
 const {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
 export default function CoffeeCard({item}) {
+ 
 
     const navigation = useNavigation();
    
@@ -51,7 +52,7 @@ export default function CoffeeCard({item}) {
                 </View>
                 <View className="flex-row space-x-1 z-10 mb-6">
                     <Text className="text-base text-white font-semibold opacity-60">Volume</Text>
-                    <Text className="text-base text-white font-semibold">{item.volume}</Text>
+                    <Text className="text-base text-white font-semibold">{item.volumes.small}</Text>
                 </View>
 
 
@@ -69,7 +70,7 @@ export default function CoffeeCard({item}) {
             }}
                 className="flex-row justify-between items-center mb-5"
                 >
-                    <Text className="text-white font-bold text-lg">$ {item.price}</Text>
+                    <Text className="text-white font-bold text-lg">$ {item.prices.small}</Text>
                     <TouchableOpacity 
                         onPress={()=> navigation.navigate('Product', {...item})}
                         style={{

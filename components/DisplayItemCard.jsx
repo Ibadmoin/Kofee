@@ -13,6 +13,7 @@ import Animated, {
 
 import {storeItems} from '../constants/index';
 import Loader from './loader';
+import { useNavigation } from '@react-navigation/native';
 export default function DisplayItemCard({categories}) {
   const [loading, setLoader] = useState(false);
   return (
@@ -49,12 +50,14 @@ export default function DisplayItemCard({categories}) {
 }
 
 const CardItem = ({item, index}) => {
-  console.log(item.image);
+  const navigation = useNavigation();
 
+  
   const isEven = index % 2 == 0;
 
   return (
     <Animated.View
+    
       entering={FadeInDown.delay(index * 100)
         .duration(600)
         .springify()
@@ -65,7 +68,8 @@ const CardItem = ({item, index}) => {
           paddingLeft: isEven ? 0 : 8,
           paddingRight: isEven ? 8 : 0,
         }}
-        className="flex justify-center mb-4 space-y-1 ">
+        
+        className="flex justify-center mb-4 space-y-1 " onPress={()=> navigation.navigate('StoreProducts', {...item})}>
         <Image
           source={item.image}
           style={{

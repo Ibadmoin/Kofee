@@ -24,7 +24,7 @@ import {useNavigation} from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 const ios = Platform.OS == 'ios';
 
-export default function ProductScreen(props) {
+export default function StoreItemScreen(props) {
   const item = props.route.params;
   const [size, setSize] = useState('small');
   const [quantity, setQuantity]= useState(1);
@@ -48,7 +48,7 @@ export default function ProductScreen(props) {
     <View className="flex-1">
       <StatusBar barStyle={'light-content'} />
       <Image
-        source={require('../assets/images/beansBackground2.png')}
+        source={item.image}
         style={{
           height: 250,
           borderBottomLeftRadius: 50,
@@ -56,7 +56,7 @@ export default function ProductScreen(props) {
         }}
         className="w-full absolute"
       />
-      <SafeAreaView className="space-y-4  flex-1">
+      <SafeAreaView className="space-y-1  flex-1">
         <View className="mx-4 flex-row  justify-between  items-center">
           <TouchableOpacity
             className="rounded-full"
@@ -76,12 +76,8 @@ export default function ProductScreen(props) {
             shadowOpacity: 1.9,
             elevation: 5,
           }}
-          className="flex-row justify-center ">
-          <Image
-            source={{uri:item.imageUrl}}
-            className="h-60 w-60 "
-            style={{marginTop: ios ? 0 : 0}}
-          />
+          className="flex-row justify-center w-40 h-60 ">
+          
         </View>
         <ScrollView>
         <View
@@ -99,7 +95,7 @@ export default function ProductScreen(props) {
           <Text
             style={{color: themeColors.text}}
             className="text-lg font-semibold ">
-            $ {size==="large"?item.prices.large:size==="medium"?item.prices.medium:item.prices.small}
+            $ {size==="large"?(Number(item.price)+10).toFixed(2):size=="medium"?(Number(item.price)+5).toFixed(2):item.price}
           </Text>
         </View>
         <View className="px-4 space-y-2">
@@ -149,7 +145,7 @@ export default function ProductScreen(props) {
                 <Text className="text-base text-gray-700 font-semibold opacity-60">
                 Volume 
                 </Text>
-                <Text className="text-base text-black font-semibold">{size==="large"?item.volumes.large:size==="medium"?item.volumes.medium:item.volumes.small}</Text>
+                <Text className="text-base text-black font-semibold">{(item.volume)}</Text>
               </View>
               <View className="flex-row justify-center rounded-full p-3 m-3 " style={{backgroundColor:themeColors.bgDark,width:130}}>
                 <TouchableOpacity>

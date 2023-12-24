@@ -25,32 +25,42 @@ import SkeletonLoader from '../components/skeleton/ScoffeeCard';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import DisplayItemCard from '../components/DisplayItemCard';
+import {config} from 'dotenv';
+
+
+
 
 const {width, height} = Dimensions.get('window');
 export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
   const [loader, setLoader] = useState(true);
   const [data, setData] = useState(null);
+  const [featuredData, setFeaturedData]= useState(null)
   const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          'https://fair-lime-goose-wear.cyclic.app/api/product',
-        );
-        setData(response.data);
-        console.log(response.data);
+        const mainResponse = await axios.get('https://sore-pear-seagull-gear.cyclic.app/api/product/');
+        setData(mainResponse.data);
+
+        const featuredResponse = await axios.get('https://sore-pear-seagull-gear.cyclic.app/api/product/featured');
+        setFeaturedData(featuredResponse.data.featuredProducts);
 
         setLoader(false);
       } catch (err) {
         console.log(`Error: ${err}`);
       }
     };
-    // setTimeout(() => {setLoader(false)},2000)
+
     fetchData();
   }, []);
+useEffect(()=>{
 
+  console.log("featuredData=>",featuredData)
+},[featuredData])
+
+ 
   // const coffeeItems = data.coffeeItems;
   return (
     <View>
@@ -146,7 +156,7 @@ export default function HomeScreen() {
                 style={{padding: 8}}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                data={data}
+                data={featuredData}
                 keyExtractor={item => item._id}
                 renderItem={({item}) =>
                   item.isEmpty ? (
@@ -161,9 +171,9 @@ export default function HomeScreen() {
           </View>
         )}
         {/* Added more needed scrollable content/Comp here... */}
-        <View>
+        {/* <View>
           <DisplayItemCard />
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );

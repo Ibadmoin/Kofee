@@ -102,5 +102,10 @@ export const storeItems= [
   {
     name: "Caramel syrup",
     image: require('../assets/images/syrups/Caramel.jpg'),
-  },
+    price: '23.10',
+    volume: '120 ml',
+    stars: '4.7',
+    description: 'The taste of caramel which energize your day!',
+    categorie: "Syrups"
+   },
 ]

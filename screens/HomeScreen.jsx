@@ -171,9 +171,9 @@ useEffect(()=>{
           </View>
         )}
         {/* Added more needed scrollable content/Comp here... */}
-        {/* <View>
+        <View>
           <DisplayItemCard />
-        </View> */}
+        </View>
       </ScrollView>
     </View>
   );

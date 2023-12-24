@@ -55,7 +55,7 @@ export default function ItemScreen({route}) {
           </SafeAreaView>
           <ScrollView>
             <View>
-              <DisplayItemCard />
+              <DisplayItemCard categories={queryItem} />
             </View>
           </ScrollView>
 

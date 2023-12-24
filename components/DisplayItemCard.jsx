@@ -13,19 +13,19 @@ import Animated, {
 
 import {storeItems} from '../constants/index';
 import Loader from './loader';
-export default function DisplayItemCard() {
+export default function DisplayItemCard({categories}) {
   const [loading, setLoader] = useState(false);
   return (
     <View className="mx-4 space-y-3  pd-20">
       <Text
         style={{fontSize: hp(4)}}
-        className="font-bold text-neutral-600">
-        Store Items
+        className="font-bold text-neutral-600 mb-5 mt-5">
+        {categories? categories:"Store Items"}
       </Text>
       {loading ? (
         <Loader />
       ) : (
-        <View className="flex" >
+        <View style={{}} className="flex-1" >
           <View>
             <MasonryList
               data={storeItems}

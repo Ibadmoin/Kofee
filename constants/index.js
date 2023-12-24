@@ -2,24 +2,36 @@
 export const categories = [
   {
     id: 1,
-    title: "Cappuccino",
+    title: "Coffee",
   },
   {
     id: 2,
-    title: "Latte",
+    title: "Brewed Coffee",
   },
   {
     id: 3,
-    title: "Espresso",
+    title: "Specialty Drinks",
   },
   {
     id: 4,
-    title: "Mocha",
+    title: "Flavored Syrups",
   },
   {
     id: 5,
-    title: "Americano",
+    title: "Milk Alternatives",
   },
+  {
+    id: 6,
+    title: "Pastries"
+  },
+  {
+    id: 7,
+    title: "Sandwiches"
+  },
+  {
+    id: 8,
+    title:"Kid's Menu"
+  }
 ]
 
 export const coffeeItems = [

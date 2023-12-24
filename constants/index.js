@@ -76,19 +76,19 @@ export const coffeeItems = [
 
 export const storeItems= [
   {
-    name: "chocolate syrup",
-    image: '../assets/images/syrups/Chocolate.jpg'
+    name: "chocolate syrup ",
+    image: require('../assets/images/syrups/Chocolate.jpg'),
   },
   {
     name: "Vanilla syrup",
-    image:'../assets/images/syrups/Vanilla.jpg'
+    image: require('../assets/images/syrups/Vanilla.jpg'),
   },
   {
     name: "Hazelnut syrup",
-    image: '../assets/images/syrups/Hazelnut.jpg'
+    image: require('../assets/images/syrups/Hazelnut.jpg'),
   },
   {
     name: "Caramel syrup",
-    image:'../assets/images/syrups/Caramel.jpg'
+    image: require('../assets/images/syrups/Caramel.jpg'),
   },
 ]

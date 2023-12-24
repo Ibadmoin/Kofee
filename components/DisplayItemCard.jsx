@@ -18,14 +18,14 @@ export default function DisplayItemCard() {
   return (
     <View className="mx-4 space-y-3  pd-20">
       <Text
-        style={{fontSize: hp(3)}}
-        className="font-semibold text-neutral-600">
-        Store card
+        style={{fontSize: hp(4)}}
+        className="font-bold text-neutral-600">
+        Store Items
       </Text>
       {loading ? (
         <Loader />
       ) : (
-        <View>
+        <View className="flex" >
           <View>
             <MasonryList
               data={storeItems}

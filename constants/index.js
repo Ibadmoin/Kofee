@@ -1,36 +1,44 @@
 
 export const categories = [
-  {
-    id: 1,
-    title: "Coffee",
-  },
+  // {
+  //   id: 1,
+  //   title: "Coffee",
+  //   categorie: "coffee"
+  // },
   {
     id: 2,
     title: "Brewed Coffee",
+    categorie: "Brewedcoffee"
   },
   {
     id: 3,
     title: "Specialty Drinks",
+    categorie: "Drinks"
   },
   {
     id: 4,
     title: "Flavored Syrups",
+    categorie: "Syrups"
   },
   {
     id: 5,
     title: "Milk Alternatives",
+    categorie: "Milk"
   },
   {
     id: 6,
-    title: "Pastries"
+    title: "Pastries",
+    categorie: "Pasteries"
   },
   {
     id: 7,
-    title: "Sandwiches"
+    title: "Sandwiches",
+    categorie: "Sandwiches"
   },
   {
     id: 8,
-    title:"Kid's Menu"
+    title:"Kid's Menu",
+    categorie: "Kidmenu"
   }
 ]
 

@@ -119,7 +119,7 @@ useEffect(()=>{
                   onPress={() => {
                     setActiveCategory(item.id);
                     navigation.navigate('Item', {
-                      queryItem: item.title,
+                      queryItem: item.categorie,
                     });
                   }}
                   style={{

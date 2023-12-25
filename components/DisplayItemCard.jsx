@@ -14,8 +14,15 @@ import Animated, {
 import {storeItems} from '../constants/index';
 import Loader from './loader';
 import { useNavigation } from '@react-navigation/native';
-export default function DisplayItemCard({categories}) {
-  const [loading, setLoader] = useState(false);
+export default function DisplayItemCard({categories, data}) {
+
+  const [loading, setLoader] = useState(true);
+ useEffect(()=>{
+  console.log("fetched data: ",data);
+  setLoader(false);
+ },[data])
+
+
   return (
     <View className="mx-4 space-y-3  pd-20">
       <Text
@@ -26,10 +33,10 @@ export default function DisplayItemCard({categories}) {
       {loading ? (
         <Loader />
       ) : (
-        <View style={{}} className="flex-1" >
+        <View  className="flex-1" >
           <View>
             <MasonryList
-              data={storeItems}
+              data={data}
               keyExtractor={item => item.id}
               numColumns={2}
               showsVerticalScrollIndicator={false}
@@ -71,7 +78,7 @@ const CardItem = ({item, index}) => {
         
         className="flex justify-center mb-4 space-y-1 " onPress={()=> navigation.navigate('StoreProducts', {...item})}>
         <Image
-          source={item.image}
+          source={{uri:item.imageUrl}}
           style={{
             width: '100%',
             height: index % 3 == 0 ? hp(25) : hp(35),

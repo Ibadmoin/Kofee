@@ -42,7 +42,7 @@ export default function HomeScreen() {
     const fetchData = async () => {
       try {
         const mainResponse = await axios.get('https://sore-pear-seagull-gear.cyclic.app/api/product/');
-        setData(mainResponse.data);
+        setData(mainResponse.data.products);
 
         const featuredResponse = await axios.get('https://sore-pear-seagull-gear.cyclic.app/api/product/featured');
         setFeaturedData(featuredResponse.data.featuredProducts);
@@ -50,6 +50,7 @@ export default function HomeScreen() {
         setLoader(false);
       } catch (err) {
         console.log(`Error: ${err}`);
+        setLoader(false);
       }
     };
 
@@ -72,7 +73,7 @@ useEffect(()=>{
       />
 
       <SafeAreaView>
-        <View className="mt-2 mx-4 flex-row justify-between items-center  ">
+        <View className="mt-2 mx-4  flex-row justify-between items-center  ">
           <Image
             className="h-9 w-9 rounded-full "
             source={require('../assets/images/avatar.png')}
@@ -86,7 +87,7 @@ useEffect(()=>{
         </View>
         {/* Search bar */}
         <View className="mx-5 shadow" style={{marginTop: height * 0.03}}>
-          <View className="flex-row items-center rounded-full p-1 bg-[#e6e6e6]">
+          <View className="flex-row items-center rounded-full p-1 bg-[#e6e6e6] mb-3">
             <TextInput
               style={{flex: 0.8}}
               placeholder="Search"
@@ -149,7 +150,8 @@ useEffect(()=>{
             </View>
           </View>
         ) : (
-          <View style={{overflow: 'visible'}}>
+          <View>
+            <View style={{overflow: 'visible'}}>
             <View
               style={{backgroundColor: 'transparent', flexDirection: 'row'}}>
               <FlatList
@@ -169,11 +171,13 @@ useEffect(()=>{
               />
             </View>
           </View>
+           <View>
+           <DisplayItemCard data={data} />
+         </View>
+          </View>
         )}
         {/* Added more needed scrollable content/Comp here... */}
-        <View>
-          <DisplayItemCard />
-        </View>
+       
       </ScrollView>
     </View>
   );

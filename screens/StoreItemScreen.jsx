@@ -45,10 +45,10 @@ export default function StoreItemScreen(props) {
 
   const navigation = useNavigation()
   return (
-    <View className="flex-1">
+    <View className="flex-1 ">
       <StatusBar barStyle={'light-content'} />
       <Image
-        source={item.image}
+        source={{uri:item.imageUrl}}
         style={{
           height: 250,
           borderBottomLeftRadius: 50,
@@ -56,7 +56,7 @@ export default function StoreItemScreen(props) {
         }}
         className="w-full absolute"
       />
-      <SafeAreaView className="space-y-1  flex-1">
+      <SafeAreaView className="space-y-1   flex-1">
         <View className="mx-4 flex-row  justify-between  items-center">
           <TouchableOpacity
             className="rounded-full"
@@ -75,8 +75,9 @@ export default function StoreItemScreen(props) {
             shadowOffset: {width: 0, height: 30},
             shadowOpacity: 1.9,
             elevation: 5,
+            height: 230
           }}
-          className="flex-row justify-center w-40 h-60 ">
+          className="flex-row justify-center w-40   ">
           
         </View>
         <ScrollView>
@@ -95,7 +96,7 @@ export default function StoreItemScreen(props) {
           <Text
             style={{color: themeColors.text}}
             className="text-lg font-semibold ">
-            $ {size==="large"?(Number(item.price)+10).toFixed(2):size=="medium"?(Number(item.price)+5).toFixed(2):item.price}
+            $ {size==="large"?item.prices.large:size==="medium"?item.prices.medium:item.prices.small}
           </Text>
         </View>
         <View className="px-4 space-y-2">
@@ -145,7 +146,7 @@ export default function StoreItemScreen(props) {
                 <Text className="text-base text-gray-700 font-semibold opacity-60">
                 Volume 
                 </Text>
-                <Text className="text-base text-black font-semibold">{(item.volume)}</Text>
+                <Text className="text-base text-black font-semibold">{(size==="large"?item.volumes.large:size==="medium"?item.volumes.medium:item.volumes.small)}</Text>
               </View>
               <View className="flex-row justify-center rounded-full p-3 m-3 " style={{backgroundColor:themeColors.bgDark,width:130}}>
                 <TouchableOpacity>

@@ -25,6 +25,7 @@ import SkeletonLoader from '../components/skeleton/ScoffeeCard';
 import axios from 'axios';
 import DisplayItemCard from '../components/DisplayItemCard';
 import Loader from '../components/loader';
+import SearchBox from '../components/SearchBox';
 
 const {width, height} = Dimensions.get('window');
 export default function ItemScreen({route}) {
@@ -72,20 +73,7 @@ export default function ItemScreen({route}) {
           <BellIcon size="27" color="black" />
         </View>
         {/* Search bar */}
-        <View className="mx-5 shadow" style={{marginTop: height * 0.03}}>
-          <View className="flex-row items-center rounded-full p-1 bg-[#e6e6e6] mb-2">
-            <TextInput
-              style={{flex: 0.8}}
-              placeholder="Search"
-              className="p-4 font-semibold text-gray-700"
-            />
-            <TouchableOpacity
-              className="rounded-full p-2 absolute right-5"
-              style={{backgroundColor: themeColors.bgLight}}>
-              <MagnifyingGlassIcon size="25" strokeWidth={2} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
+        <SearchBox/>
       </SafeAreaView>
       {loading ? (
     

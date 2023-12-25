@@ -8,6 +8,7 @@ import ItemScreen from "./screens/ItemScreen";
 import ProductScreen from "./screens/ProductScreen";
 import AppNavigation from "./navigation/AppNavigation";
 import SkeletonLoader from "./components/skeleton/ScoffeeCard";
+import SearchBox from "./components/SearchBox";
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,6 +19,7 @@ const App = () => {
   
   <AppNavigation />
   // <ItemScreen />
+  // <SearchBox />
 
   
   );

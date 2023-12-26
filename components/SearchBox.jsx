@@ -34,6 +34,9 @@ export default function SearchBox() {
     return () => clearInterval(delayDebounceFn);
   }, [searchTerm]);
 
+
+
+
   const fetchSuggestions = async () => {
     try {
       const response = await axios.get(

@@ -11,6 +11,7 @@ import {HomeIcon as HomeSolid, HeartIcon as HeartSolid, ShoppingBagIcon as BagSo
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ItemScreen from '../screens/ItemScreen';
 import StoreItemScreen from '../screens/StoreItemScreen';
+import LoginScreen from '../screens/LoginScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -26,6 +27,8 @@ export default function AppNavigation() {
       <Stack.Navigator initialRouteName='Welcome' screenOptions={{
         contentStyle: {backgroundColor: 'white'}
       }}>
+
+        <Stack.Screen name="Login" options={{headerShown: false}} component={LoginScreen} />
         <Stack.Screen name="Home" options={{headerShown: false}} component={HomeScreen} />
         <Stack.Screen name="Product" options={{headerShown: false}} component={ProductScreen} />
         <Stack.Screen name="StoreProducts" options={{headerShown: false}} component={StoreItemScreen} />

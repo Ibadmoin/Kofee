@@ -35,7 +35,8 @@ export default function WelcomeScreen() {
     ring2padding.value= 0;
     setTimeout(()=>ring1padding.value = withSpring(ring1padding.value+hp(5)),100);
     setTimeout(()=>ring2padding.value = withSpring(ring2padding.value+hp(5.5)),100);
-    setTimeout(()=>navigation.navigate('Home'),250);
+  //  condition for auth here....
+    setTimeout(()=>navigation.navigate('Login'),250);
   },[])
 
   return (

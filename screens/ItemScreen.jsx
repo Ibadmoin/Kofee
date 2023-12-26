@@ -29,22 +29,36 @@ import SearchBox from '../components/SearchBox';
 
 const {width, height} = Dimensions.get('window');
 export default function ItemScreen({route}) {
-  const {queryItem} = route.params;
+  const {queryItem, queryItemName} = route.params;
   const [data, setData] = useState(null);
-  const [loading, setloading] = useState(true);
+  const [loading, setloading] = useState(false);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://sore-pear-seagull-gear.cyclic.app/api/product/getCategories?category=${queryItem}`,
-        );
-        setData(response.data.products);
-        setloading(false);
-      } catch (err) {
-        console.log('Error fetching Categories product', err);
-        setloading(false);
+
+    const fetchData = async()=>{
+      setloading(true);
+      try{
+        if(queryItem){
+          console.log(queryItem)
+          const response = await axios.get(`https://sore-pear-seagull-gear.cyclic.app/api/product/getcategories?category=${queryItem}`)
+          // console.log(response.data.products);
+          setData(response.data.products);
+          setloading(false);
+        }else{
+          console.log(queryItemName)
+         const response = await axios.get(`https://sore-pear-seagull-gear.cyclic.app/api/product/search?term=${queryItemName}`)
+         setData(response.data.suggestions) 
+         setloading(false);
+          
+       }
+
+      }catch(err){
+        console.log("Error while fecthing this category",err)
+        setloading(false)
       }
-    };
+    }
+    
+ 
 
     fetchData();
   }, []);

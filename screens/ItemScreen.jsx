@@ -96,7 +96,7 @@ export default function ItemScreen({route}) {
        </View>
       
       ) : data ? (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <DisplayItemCard data={data} />
           </View>

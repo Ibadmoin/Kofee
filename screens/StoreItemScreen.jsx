@@ -80,7 +80,7 @@ export default function StoreItemScreen(props) {
           className="flex-row justify-center w-40   ">
           
         </View>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{backgroundColor: themeColors.bgLight}}
           className="flex-row justify-center items-center mx-4 rounded-3xl p-1 px-2 space-x-1 opacity-90 w-16">

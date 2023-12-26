@@ -90,7 +90,7 @@ useEffect(()=>{
       </SafeAreaView>
       <SearchBox />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* Categories */}
         <View className="px-5 mt-6 ">
           <FlatList

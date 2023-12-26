@@ -26,6 +26,7 @@ import axios from 'axios';
 import DisplayItemCard from '../components/DisplayItemCard';
 import Loader from '../components/loader';
 import SearchBox from '../components/SearchBox';
+import NotFound from '../components/NotFound';
 
 const {width, height} = Dimensions.get('window');
 export default function ItemScreen({route}) {
@@ -104,7 +105,7 @@ export default function ItemScreen({route}) {
       ) : (
         <View>
           {/* add no result found compoenent */}
-          <Text>Internal server Error</Text>
+         <NotFound />
         </View>
       )}
     </View>

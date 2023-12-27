@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: wp('85%'),
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     marginBottom: 10,
     marginTop: 10,
   },
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     position: 'absolute',
-    right: 5,
+    right: 15,
   },
   errorText: {
     color: 'red',

@@ -32,6 +32,7 @@ const LoginScreen = () => {
   const [showLoginComp, setShowLoginComp]= useState(true);
   const [token, setToken]= useState(null);
   const [loading, setLoading]= useState(false);
+  const [feildError,setFeildError] = useState(null);
 
   const navigation = useNavigation();
 
@@ -83,10 +84,21 @@ const LoginScreen = () => {
     setShowPassword(!showPassword);
   };
 
+  const validateFields = ()=>{
+    if(email ==="" && password ===""){
+      setFeildError("Feilds can't be empty.");
+      return false
+
+    }else{
+      return;
+    }
+  }
+
   const handleLogin = async () => {
     validateEmail();
     validatePassword();
-    if (!emailError && !passwordError) { // Check the truthiness of the validation errors
+    validateFields();
+    if (!emailError && !passwordError && feildError) { // Check the truthiness of the validation errors
       try {
         setLoading(true);
         const response = await axios.post(
@@ -179,6 +191,10 @@ const LoginScreen = () => {
           </View>
           {passwordError && (
             <Text style={styles.errorText}>{passwordError}</Text>
+            )}
+          {feildError && (
+            
+            <Text style={styles.errorText}>{feildError}</Text>
           )}
           <TouchableOpacity onPress={()=>handleLogin()} style={styles.loginButton}>
             <Text style={styles.loginButtonText}>Login</Text>

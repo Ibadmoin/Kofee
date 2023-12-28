@@ -7,6 +7,7 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
+  BackHandler,
 } from 'react-native';
 import {themeColors} from '../theme';
 import {
@@ -26,16 +27,26 @@ export default function SignUp({toggleShowLoginComp}) {
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [isKeyboardOpen, setKeyboardOpen] = useState(false);
-  const [phone, setPhone]= useState("+92")
+  const [phone, setPhone]= useState("+92");
+  const [loading, setLoading]= useState(false);
+  const[userName, setUserName]= useState("");
+
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setEmailError(emailRegex.test(email) ? null : 'Invalid email address');
   };
 
   const validatePassword = () => {
-    if(password !==confrimPassword ){
-        setPasswordError("Passwords do not match");
+    if(password ===""){
+      setPasswordError("Field can't be empty!");
+     
     }else{
+      if(password !== confrimPassword){
+        setPasswordError("Passwords do not match");
+
+        console.log("dont")
+        return;
+      }
         const passwordRegex =
       /^(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])(?=.*[a-z]).{8,}$/;
 
@@ -58,7 +69,8 @@ export default function SignUp({toggleShowLoginComp}) {
   };
 
   const handleSignUp = ()=>{
-    validatePassword()
+    validateEmail();
+    validatePassword();
     console.log("signup done")
   };
 
@@ -82,12 +94,36 @@ export default function SignUp({toggleShowLoginComp}) {
   }, []);
 
   return (
-    <View className="flex  h-100" style={{height:hp(90)}}>
-      <View className="mb-50">
-          <Text style={[styles.text,{textAlign:"center"}]}>Koffee</Text>
-          <Text style={[styles.subText,{textAlign:"center"}]}>SignUp Page </Text>
+    <View className="  h-100" style={{height:hp(90)}}>
+      {!isKeyboardOpen && (
+            <Text
+              className="mt-10"
+              style={[
+                styles.subText,
+                {
+
+                  color: themeColors.bgLight,
+                  position: 'absolute',
+                  top: -40,
+                  left:hp(2),
+                },
+              ]} onPress={handleSetLoginComp}>
+                Already have an account
+            </Text>
+          )}
+      <View className="mt-10 ">
+          <Text style={[styles.text,{textAlign:"center"}]}>SignUp Page </Text>
         </View>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <TextInput
+            label="UserName"
+            value={userName}
+            style={styles.input}
+            textColor="white"
+            
+            activeUnderlineColor={themeColors.bgLight}
+            onChangeText={userName => setUserName(userName)}
+          />
           <TextInput
             label="Email"
             value={email}
@@ -97,7 +133,7 @@ export default function SignUp({toggleShowLoginComp}) {
             activeUnderlineColor={themeColors.bgLight}
             onChangeText={email => setEmail(email)}
           />
-          {emailError && <Text style={styles.errorText}>{emailError}</Text>}
+         
           {/* phone validation here... */}
           <TextInput
             label="Phone"
@@ -147,27 +183,13 @@ export default function SignUp({toggleShowLoginComp}) {
             />
         
           </View>
-          {passwordError && (
-            <Text style={styles.errorText}>{passwordError}</Text>
-          )}
+         
+           {emailError? <Text style={styles.errorText}>{emailError}</Text>:passwordError?<Text style={styles.errorText}>{passwordError}</Text>:null}
           <TouchableOpacity onPress={handleSignUp} style={styles.loginButton}>
             <Text style={styles.loginButtonText}>SignUp</Text>
           </TouchableOpacity>
 
-          {!isKeyboardOpen && (
-            <Text
-              className="mt-10"
-              style={[
-                styles.subText,
-                {
-                  color: themeColors.bgLight,
-                  position: 'absolute',
-                  bottom: 2,
-                },
-              ]} onPress={handleSetLoginComp}>
-              Already have an account
-            </Text>
-          )}
+      
         </ScrollView>
     </View>
   )
@@ -238,5 +260,6 @@ const styles = StyleSheet.create({
       flexGrow: 1,
       justifyContent: 'center',
       alignItems: 'center',
+      paddingTop:20,
     },
   });

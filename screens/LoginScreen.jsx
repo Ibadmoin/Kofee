@@ -16,6 +16,7 @@ import {
 // navigation import
 import {IconButton, TextInput} from 'react-native-paper';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/solid';
+import SignUp from '../components/SignUp';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -53,7 +54,9 @@ const LoginScreen = () => {
       console.log('Login successfully');
     }
   };
-
+  const toggleShowLoginComp = () => {
+    setShowLoginComp(!showLoginComp);
+  };
   
 
   useEffect(() => {
@@ -111,9 +114,9 @@ const LoginScreen = () => {
               onPress={togglePasswordVisibility}
               style={styles.iconButton}>
               {showPassword ? (
-                <EyeSlashIcon color={'white'} />
-              ) : (
                 <EyeIcon color={'white'} />
+                ) : (
+                  <EyeSlashIcon color={'white'} />
               )}
             </TouchableOpacity>
           </View>
@@ -134,12 +137,16 @@ const LoginScreen = () => {
                   position: 'absolute',
                   bottom: 10,
                 },
-              ]} onPress={()=>setShowLoginComp(false)}>
+              ]} onPress={()=>toggleShowLoginComp()}>
               create an account
             </Text>
           )}
         </ScrollView>
-      </View>):(<Text style={{color:"white"}} onPress={()=>setShowLoginComp(true)}>already have account</Text>)}
+      </View>):(<View>
+        <SignUp   toggleShowLoginComp={toggleShowLoginComp}/>
+      
+      </View>
+      )}
     </ImageBackground>
   );
 };

@@ -17,6 +17,10 @@ import {
 import {IconButton, TextInput} from 'react-native-paper';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/solid';
 import SignUp from '../components/SignUp';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import Loader from '../components/loader';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -26,6 +30,38 @@ const LoginScreen = () => {
   const [passwordError, setPasswordError] = useState(null);
   const [isKeyboardOpen, setKeyboardOpen] = useState(false);
   const [showLoginComp, setShowLoginComp]= useState(true);
+  const [token, setToken]= useState(null);
+  const [loading, setLoading]= useState(false);
+
+  const navigation = useNavigation();
+
+
+  // // load token fromasyncstorage
+  useEffect(()=>{
+    const loadToken = async()=>{
+      try{
+        const savedToken = await AsyncStorage.getItem('userToken');
+        if(savedToken !== null){
+          setToken(savedToken);
+          console.log('Token from async storagexd',savedToken);
+          navigation.navigate('Home');
+
+        }
+      }catch(err){
+        console.log('Error loading token:',err)
+      }
+    }
+    loadToken();
+  },[]);
+
+  const savedTokenToAsyncStorage = async(apiToken)=>{
+    try{
+      await AsyncStorage.setItem('userToken',apiToken);
+      console.log('Token saved to AsyncStorage');
+    }catch(err){
+      console.log('Error saving token to AsyncStorage',err);
+    }
+  };
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -47,13 +83,31 @@ const LoginScreen = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     validateEmail();
     validatePassword();
-    if (!validateEmail && !validatePassword) {
-      console.log('Login successfully');
+    if (!emailError && !passwordError) { // Check the truthiness of the validation errors
+      try {
+        setLoading(true);
+        const response = await axios.post(
+          `https://sore-pear-seagull-gear.cyclic.app/api/users/login`,
+          { email, password }
+        );
+        const apiToken = response.data.token;
+        setToken(apiToken);
+        savedTokenToAsyncStorage(apiToken);
+        setLoading(false)
+        navigation.navigate("Home");
+        console.log(`Login successfully`);
+        console.log('Token:',apiToken);
+      } catch (err) {
+        console.log(err)
+        alert("Please enter valid credentials",err.message);
+        setLoading(false)
+      }
     }
   };
+  
   const toggleShowLoginComp = () => {
     setShowLoginComp(!showLoginComp);
   };
@@ -81,13 +135,16 @@ const LoginScreen = () => {
   return (
     <ImageBackground
       source={require('../assets/coffeebg.png')} // Replace with the actual path to your image
-      style={styles.background}>
+      style={[styles.background]}>
+       
     {showLoginComp ? (  <View style={styles.container}>
         <View className="mb-10">
           <Text style={styles.text}>Welcome Back!</Text>
           <Text style={styles.subText}>Please Sign in to your account</Text>
         </View>
+       
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          {loading && <View style={{position:"absolute", width:"100%", height:"100%",display:"flex", justifyContent:"center", alignItems:"center" }}><Loader/></View>}
           <TextInput
             label="Email"
             value={email}
@@ -123,7 +180,7 @@ const LoginScreen = () => {
           {passwordError && (
             <Text style={styles.errorText}>{passwordError}</Text>
           )}
-          <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+          <TouchableOpacity onPress={()=>handleLogin()} style={styles.loginButton}>
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
 
@@ -147,6 +204,7 @@ const LoginScreen = () => {
       
       </View>
       )}
+    
     </ImageBackground>
   );
 };

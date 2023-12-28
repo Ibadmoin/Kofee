@@ -21,7 +21,7 @@ import {HeartIcon, StarIcon} from 'react-native-heroicons/solid';
 import {themeColors} from '../theme';
 import {useNavigation} from '@react-navigation/native';
 import Animated, {useSharedValue,withSpring} from 'react-native-reanimated';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function WelcomeScreen() {
 
   const ring1padding = useSharedValue(0);
@@ -36,8 +36,26 @@ export default function WelcomeScreen() {
     setTimeout(()=>ring1padding.value = withSpring(ring1padding.value+hp(5)),100);
     setTimeout(()=>ring2padding.value = withSpring(ring2padding.value+hp(5.5)),100);
   //  condition for auth here....
-    setTimeout(()=>navigation.navigate('Login'),250);
+  const loadToken = async()=>{
+    try{
+      const savedToken = await AsyncStorage.getItem('userToken');
+      if(savedToken !== null){
+       
+        console.log('Token from async storagexd',savedToken);
+        setTimeout(()=>navigation.navigate('Home'),250);
+        
+      }else{
+        
+        setTimeout(()=>navigation.navigate('Login'),250);
+      }
+    }catch(err){
+      console.log('Error loading token:',err)
+    }
+  }
+  loadToken();
+   
   },[])
+
 
   return (
     <View className="flex-1 justify-center items-center space-y-10 " style={{backgroundColor:themeColors.bgDark}}>

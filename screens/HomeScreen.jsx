@@ -27,6 +27,8 @@ import {useNavigation} from '@react-navigation/native';
 import DisplayItemCard from '../components/DisplayItemCard';
 import {config} from 'dotenv';
 import SearchBox from '../components/SearchBox';
+import { Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -60,12 +62,19 @@ export default function HomeScreen() {
 useEffect(()=>{
 
   console.log("featuredData=>",featuredData)
-},[featuredData])
+},[featuredData]);
+
+const handleLogout= async()=>{
+  await AsyncStorage.removeItem('userToken');
+  navigation.navigate('Login');
+console.log('Login out successfully',AsyncStorage.getItem('userToken'));
+}
 
  
   // const coffeeItems = data.coffeeItems;
   return (
     <View>
+          
       <StatusBar />
       <Image
         source={require('../assets/images/beansBackground1.png')}
@@ -75,7 +84,8 @@ useEffect(()=>{
 
       <SafeAreaView>
         <View className="mt-2 mx-4  flex-row justify-between items-center  ">
-          <Image
+          <Image 
+          onPress={handleLogout}
             className="h-9 w-9 rounded-full "
             source={require('../assets/images/avatar.png')}
           />
@@ -84,7 +94,9 @@ useEffect(()=>{
             <MapPinIcon size="25" color={themeColors.bgLight} />
             <Text className="font-semibold text-base">Khi, Pakistan</Text>
           </View>
+          <TouchableOpacity onPress={handleLogout}>
           <BellIcon size="27" color="black" />
+          </TouchableOpacity>
         </View>
         {/* Search bar */}
       </SafeAreaView>
@@ -165,8 +177,11 @@ useEffect(()=>{
           </View>
         )}
         {/* Added more needed scrollable content/Comp here... */}
-       
+     
+      
       </ScrollView>
+  
+  
     </View>
   );
 }

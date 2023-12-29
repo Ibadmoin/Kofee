@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   BackHandler,
+  Modal,
 } from 'react-native';
 import {themeColors} from '../theme';
 import {
@@ -17,6 +18,8 @@ import {
 // navigation import
 import {IconButton, TextInput} from 'react-native-paper';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/solid';
+import axios from 'axios';
+
 
 
 export default function SignUp({toggleShowLoginComp}) {
@@ -30,6 +33,9 @@ export default function SignUp({toggleShowLoginComp}) {
   const [phone, setPhone]= useState("+92");
   const [loading, setLoading]= useState(false);
   const[userName, setUserName]= useState("");
+const [successMsg, setSuccessMsg]= useState(null);
+const [errorMsg, setErrorMsg]= useState(null);
+
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,10 +74,34 @@ export default function SignUp({toggleShowLoginComp}) {
     setShowPassword(!showPassword)
   };
 
-  const handleSignUp = ()=>{
+  const handleSignUp =async ()=>{
     validateEmail();
     validatePassword();
-    console.log("signup done")
+    // need work here...
+    if (!emailError && !passwordError) {
+      setLoading(true);
+
+      try{
+        const response = await axios.post(`https://sore-pear-seagull-gear.cyclic.app/api/users/register`,{email,password,userName,phone});
+        console.log("register successfully");
+        const apitoken = response.data;
+        console.log(apitoken);
+        console.log(response.data.text)
+        setSuccessMsg(response.data.text);
+        
+      }catch(err){
+        if(err.response){
+          if(err.response.status === 400 &&err.response.data.message === "email already exists."){
+            console.log("email already exists.")
+            setErrorMsg(err.response.data.message);
+          }
+        }else{
+          console.log("Internal server Error! Try later")
+      }
+      }
+     
+    }
+    
   };
 
   useEffect(() => {
@@ -185,12 +215,15 @@ export default function SignUp({toggleShowLoginComp}) {
           </View>
          
            {emailError? <Text style={styles.errorText}>{emailError}</Text>:passwordError?<Text style={styles.errorText}>{passwordError}</Text>:null}
+           {errorMsg?<Text style={styles.errorText}>{errorMsg}</Text>:<Text style={styles.successText}>{successMsg}</Text> }
           <TouchableOpacity onPress={handleSignUp} style={styles.loginButton}>
             <Text style={styles.loginButtonText}>SignUp</Text>
           </TouchableOpacity>
 
+
       
         </ScrollView>
+     
     </View>
   )
 }
@@ -241,6 +274,14 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       fontSize: hp(2),
     },
+    successText:{
+      color: 'green',
+      marginTop: 5,
+      marginBottom: 10,
+      textAlign: 'center',
+      fontSize: hp(2),
+
+    },
     loginButton: {
       backgroundColor: themeColors.primary,
       padding: 10,
@@ -261,5 +302,30 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       paddingTop:20,
+    },
+    modalContent: {
+      backgroundColor: themeColors.bgDark,
+      padding: 22,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 4,
+      borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    modalText: {
+      color: 'white',
+      fontSize: hp(2),
+      marginBottom: 15,
+    },
+    modalButton: {
+      backgroundColor: themeColors.primary,
+      padding: 10,
+      borderRadius: 5,
+      width: hp(15),
+      alignItems: 'center',
+    },
+    modalButtonText: {
+      color: 'white',
+      fontSize: hp(2),
+      fontWeight: 'bold',
     },
   });

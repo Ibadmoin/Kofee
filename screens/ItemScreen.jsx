@@ -27,12 +27,15 @@ import DisplayItemCard from '../components/DisplayItemCard';
 import Loader from '../components/loader';
 import SearchBox from '../components/SearchBox';
 import NotFound from '../components/NotFound';
+import { useNavigation } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 export default function ItemScreen({route}) {
   const {queryItem, queryItemName} = route.params;
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(false);
+  const navigation = useNavigation();
+
 
   useEffect(() => {
 

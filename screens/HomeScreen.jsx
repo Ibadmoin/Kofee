@@ -58,7 +58,7 @@ export default function HomeScreen() {
     };
 
     fetchData();
-  }, []);
+  },[]);
 useEffect(()=>{
 
   console.log("featuredData=>",featuredData)
@@ -180,6 +180,8 @@ console.log('Login out successfully',AsyncStorage.getItem('userToken'));
      
       
       </ScrollView>
+
+      
   
   
     </View>

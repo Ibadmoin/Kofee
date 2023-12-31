@@ -23,8 +23,8 @@ import { useNavigation } from '@react-navigation/native';
 import Loader from '../components/loader';
 
 const LoginScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null)
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
@@ -33,6 +33,7 @@ const LoginScreen = () => {
   const [token, setToken]= useState(null);
   const [loading, setLoading]= useState(false);
   const [feildError,setFeildError] = useState(null);
+  const [requiredFeilds, setRequiredFeilds] = useState(false);
 
   const navigation = useNavigation();
 
@@ -85,12 +86,15 @@ const LoginScreen = () => {
   };
 
   const validateFields = ()=>{
-    if(email ==="" && password ===""){
+    if(email ===null && password ===null){
       setFeildError("Feilds can't be empty.");
       return false
 
     }else{
-      return;
+      console.log("returning value: true");
+      setEmailError(null)
+      setRequiredFeilds(true);
+      return true;
     }
   }
 
@@ -98,9 +102,11 @@ const LoginScreen = () => {
     validateEmail();
     validatePassword();
     validateFields();
-    if (!emailError && !passwordError && feildError) { // Check the truthiness of the validation errors
+    if (!emailError && !passwordError && requiredFeilds) { // Check the truthiness of the validation errors
+     
       try {
         setLoading(true);
+        console.log("trying login...")
         const response = await axios.post(
           `https://sore-pear-seagull-gear.cyclic.app/api/users/login`,
           { email, password }
@@ -196,7 +202,7 @@ const LoginScreen = () => {
             
             <Text style={styles.errorText}>{feildError}</Text>
           )}
-          <TouchableOpacity onPress={()=>handleLogin()} style={styles.loginButton}>
+          <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
             <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
 

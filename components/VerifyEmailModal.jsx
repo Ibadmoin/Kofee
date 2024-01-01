@@ -5,7 +5,7 @@ import { Modal } from 'react-native'
 import { themeColors } from '../theme';
 import { Linking } from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-export default function VeridyEmailModal({Visible,ModalHeader, ModalText}) {
+export default function VerifyEmailModal({Visible,ModalHeader, ModalText}) {
     const [isVisible, setIsVisible] = useState(Visible);
     const openGmailApp = async () => {
         const url = 'https://gmail.app.goo.gl';

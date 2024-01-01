@@ -17,21 +17,27 @@ import {
 // navigation import
 import {IconButton, TextInput} from 'react-native-paper';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/solid';
+import axios from 'axios';
+import Loader from './loader';
+import VerifyEmailModal from './VerifyEmailModal';
 
 
 export default function SignUp({toggleShowLoginComp}) {
-      const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confrimPassword, setConfrimPassword] = useState('');
+      const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [confrimPassword, setConfrimPassword] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [isKeyboardOpen, setKeyboardOpen] = useState(false);
   const [phone, setPhone]= useState("+92");
   const [loading, setLoading]= useState(false);
-  const[userName, setUserName]= useState("");
+  const[userName, setUserName]= useState(null);
   const [requriedFeilds, setRequiredFeilds]= useState(false);
-  const [feildError, setFeildError]= useState("");
+  const [feildError, setFeildError]= useState(null);
+  const [modalActive, setModalActive]= useState(false);
+  const [modalHead, setModalHead]= useState(null);
+  const [modalText, setModalText]= useState(null);
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,7 +52,7 @@ export default function SignUp({toggleShowLoginComp}) {
       if(password !== confrimPassword){
         setPasswordError("Passwords do not match");
 
-        console.log("dont")
+       
         return;
       }
         const passwordRegex =
@@ -63,15 +69,19 @@ export default function SignUp({toggleShowLoginComp}) {
   };
 
   const validateFields = ()=>{
-    if(email ===null && password ===null && userName === null && phone === null){
+    if(email ===null && password ===null && userName === null ){
 
       setFeildError("Feilds can't be empty.");
-      return false;
-
+      setRequiredFeilds(false);
+      console.log("re is false");
+      
+      
     }else{
-      setFeildError("")
+      setFeildError(null);
       setRequiredFeilds(true);
-      return true;
+      console.log("re is true");
+
+
     }
   }
   const handleSetLoginComp = ()=>{
@@ -83,17 +93,40 @@ export default function SignUp({toggleShowLoginComp}) {
     setShowPassword(!showPassword)
   };
 
-  const handleSignUp = ()=>{
+  const openModal = (modalHead, modalText) => {
+    setModalHead(modalHead);
+    setModalText(modalText);
+    setModalActive(true);
+  };
+  
+  const handleSignUp = async()=>{
     validateFields();
     validateEmail();
     validatePassword();
-    if (!passwordError && !emailError){
-      
-      console.log("signup done")
-    }else{
-      console.log("signUp unsuccessfull.")
+    if(requriedFeilds){
+      try{
+        setLoading(true);
+        const response = await axios.post('http://192.168.100.25:8000/api/users/register/',{email, password, userName,phone});
+        setLoading(false);
+        openModal(response.data.message.head,response.data.message.text )
+
+      }catch(err){
+        const errorResponse = err.response.data;
+        const errorStatus = err.response.status;
+  
+        if (errorStatus === 400 && errorResponse.message.head === "Email already Registered.") {
+          setLoading(false);
+          openModal(errorResponse.message.head, errorResponse.message.text);
+        } else {
+          console.log("Signup unsuccessful.");
+          console.log(errorResponse.data);
+        }
+  
+        setLoading(false);
+
+      }
     }
-  };
+  }
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -132,6 +165,12 @@ export default function SignUp({toggleShowLoginComp}) {
                 Already have an account
             </Text>
           )}
+          {loading && <View style={{ width:hp(50), height:hp(50),position:"absolute" ,top:"20%",left:hp(5) }}>
+            <Loader  />
+            
+            </View>}
+          {modalActive && <VerifyEmailModal Visible={modalActive} ModalHeader={modalHead} ModalText={modalText} />}
+          
       <View className="mt-10 ">
           <Text style={[styles.text,{textAlign:"center"}]}>SignUp Page </Text>
         </View>

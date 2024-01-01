@@ -70,6 +70,7 @@ const handleLogout= async()=>{
 console.log('Login out successfully',AsyncStorage.getItem('userToken'));
 }
 
+
  
   // const coffeeItems = data.coffeeItems;
   return (
@@ -91,7 +92,7 @@ console.log('Login out successfully',AsyncStorage.getItem('userToken'));
           />
           <View className="flex-row items-center space-x-2 ">
             {/* using svg for now */}
-            <MapPinIcon size="25" color={themeColors.bgLight} />
+            <MapPinIcon  size="25" color={themeColors.bgLight} />
             <Text className="font-semibold text-base">Khi, Pakistan</Text>
           </View>
           <TouchableOpacity onPress={handleLogout}>

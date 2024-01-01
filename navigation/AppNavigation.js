@@ -12,6 +12,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import ItemScreen from '../screens/ItemScreen';
 import StoreItemScreen from '../screens/StoreItemScreen';
 import LoginScreen from '../screens/LoginScreen';
+import TestScreen from '../screens/TestScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ export default function AppNavigation() {
         <Stack.Screen name="StoreProducts" options={{headerShown: false}} component={StoreItemScreen} />
         <Stack.Screen name="Welcome" options={{headerShown: false}} component={WelcomeScreen} />
         <Stack.Screen name="Item" options={{headerShown: false}} component={ItemScreen} />
+        <Stack.Screen name="Test" options={{headerShown: false}} component={TestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   )

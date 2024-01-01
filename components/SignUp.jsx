@@ -98,7 +98,20 @@ export default function SignUp({toggleShowLoginComp}) {
     setModalText(modalText);
     setModalActive(true);
   };
-  
+  const closeModal = () => {
+    setModalActive(false);
+    // Reset modal header and text if needed
+    setModalHead(null);
+    setModalText(null);
+  };
+
+  useEffect(()=>{
+    return ()=>{
+      closeModal();
+    }
+  },[])
+
+
   const handleSignUp = async()=>{
     validateFields();
     validateEmail();
@@ -107,16 +120,20 @@ export default function SignUp({toggleShowLoginComp}) {
       try{
         setLoading(true);
         const response = await axios.post('http://192.168.100.25:8000/api/users/register/',{email, password, userName,phone});
+        console.log(response.data)
         setLoading(false);
         openModal(response.data.message.head,response.data.message.text )
 
       }catch(err){
+
         const errorResponse = err.response.data;
         const errorStatus = err.response.status;
+       
   
         if (errorStatus === 400 && errorResponse.message.head === "Email already Registered.") {
-          setLoading(false);
+          console.log("here...")
           openModal(errorResponse.message.head, errorResponse.message.text);
+          setLoading(false);
         } else {
           console.log("Signup unsuccessful.");
           console.log(errorResponse.data);
@@ -169,7 +186,7 @@ export default function SignUp({toggleShowLoginComp}) {
             <Loader  />
             
             </View>}
-          {modalActive && <VerifyEmailModal Visible={modalActive} ModalHeader={modalHead} ModalText={modalText} />}
+          {modalActive && <VerifyEmailModal closeModal={closeModal}  Visible={modalActive} ModalHeader={modalHead} ModalText={modalText} />}
           
       <View className="mt-10 ">
           <Text style={[styles.text,{textAlign:"center"}]}>SignUp Page </Text>

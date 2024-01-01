@@ -30,6 +30,8 @@ export default function SignUp({toggleShowLoginComp}) {
   const [phone, setPhone]= useState("+92");
   const [loading, setLoading]= useState(false);
   const[userName, setUserName]= useState("");
+  const [requriedFeilds, setRequiredFeilds]= useState(false);
+  const [feildError, setFeildError]= useState("");
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,6 +61,19 @@ export default function SignUp({toggleShowLoginComp}) {
     }
     
   };
+
+  const validateFields = ()=>{
+    if(email ===null && password ===null && userName === null && phone === null){
+
+      setFeildError("Feilds can't be empty.");
+      return false;
+
+    }else{
+      setFeildError("")
+      setRequiredFeilds(true);
+      return true;
+    }
+  }
   const handleSetLoginComp = ()=>{
     toggleShowLoginComp();
 
@@ -69,9 +84,15 @@ export default function SignUp({toggleShowLoginComp}) {
   };
 
   const handleSignUp = ()=>{
+    validateFields();
     validateEmail();
     validatePassword();
-    console.log("signup done")
+    if (!passwordError && !emailError){
+      
+      console.log("signup done")
+    }else{
+      console.log("signUp unsuccessfull.")
+    }
   };
 
   useEffect(() => {

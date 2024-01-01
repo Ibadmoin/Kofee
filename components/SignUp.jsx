@@ -134,7 +134,10 @@ export default function SignUp({toggleShowLoginComp}) {
           console.log("here...")
           openModal(errorResponse.message.head, errorResponse.message.text);
           setLoading(false);
-        } else {
+        }else if(errorStatus === 400 && errorResponse.message=== "Email already exists."){
+          setEmailError(errorResponse.message)
+        } 
+        else {
           console.log("Signup unsuccessful.");
           console.log(errorResponse.data);
         }

@@ -21,6 +21,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import Loader from '../components/loader';
+import VerifyEmailModal from '../components/VerifyEmailModal';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState(null);
@@ -34,6 +35,10 @@ const LoginScreen = () => {
   const [loading, setLoading]= useState(false);
   const [feildError,setFeildError] = useState(null);
   const [requiredFeilds, setRequiredFeilds] = useState(false);
+  const [modalActive, setModalActive]= useState(false);
+  const [modalHead, setModalHead]= useState(null);
+  const [modalText, setModalText]= useState(null);
+
 
   const navigation = useNavigation();
 
@@ -96,7 +101,26 @@ const LoginScreen = () => {
       setRequiredFeilds(true);
       return true;
     }
-  }
+  };
+
+// /Custom alert
+  
+  const openModal = (modalHead, modalText) => {
+    setModalHead(modalHead);
+    setModalText(modalText);
+    setModalActive(true);
+  };
+  const closeModal = () => {
+    setModalActive(false);
+    // Reset modal header and text if needed
+    setModalHead(null);
+    setModalText(null);
+  };
+  useEffect(()=>{
+    return ()=>{
+      closeModal();
+    }
+  },[])
 
   const handleLogin = async () => {
     validateEmail();
@@ -119,9 +143,20 @@ const LoginScreen = () => {
         console.log(`Login successfully`);
         console.log('Token:',apiToken);
       } catch (err) {
-        console.log(err)
-        alert("Please enter valid credentials",err.message);
-        setLoading(false)
+        const status = err.response.status;
+        const message = err.response.data.message;
+        console.log(message.head)
+        if(message.head === "Account not verified." && status === 400){
+          openModal(message.head,message.text);
+          setLoading(false);
+        }else if (message === "Invalid Password" && status === 400){
+          setPasswordError(message);
+          setLoading(false);
+        }else{
+          setEmailError(message);
+          setLoading(false);
+        }
+        
       }
     }
   };
@@ -163,6 +198,7 @@ const LoginScreen = () => {
        
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           {loading && <View style={{position:"absolute", width:"100%", height:"100%",display:"flex", justifyContent:"center", alignItems:"center" }}><Loader/></View>}
+          {modalActive && <VerifyEmailModal closeModal={closeModal}  Visible={modalActive} ModalHeader={modalHead} ModalText={modalText} />}
           <TextInput
             label="Email"
             value={email}

@@ -119,7 +119,7 @@ export default function SignUp({toggleShowLoginComp}) {
     if(requriedFeilds){
       try{
         setLoading(true);
-        const response = await axios.post('http://192.168.100.25:8000/api/users/register/',{email, password, userName,phone});
+        const response = await axios.post('https://sore-pear-seagull-gear.cyclic.app/api/users/register',{email, password, userName,phone});
         console.log(response.data)
         setLoading(false);
         openModal(response.data.message.head,response.data.message.text )
@@ -131,7 +131,7 @@ export default function SignUp({toggleShowLoginComp}) {
        
   
         if (errorStatus === 400 && errorResponse.message.head === "Email already Registered.") {
-          console.log("here...")
+         
           openModal(errorResponse.message.head, errorResponse.message.text);
           setLoading(false);
         }else if(errorStatus === 400 && errorResponse.message=== "Email already exists."){

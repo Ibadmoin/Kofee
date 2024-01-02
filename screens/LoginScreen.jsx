@@ -70,6 +70,16 @@ const LoginScreen = () => {
     }
   };
 
+  const savedUserAsyncStorage = async(user)=>{
+    try{
+      await AsyncStorage.setItem("User", JSON.stringify(user));
+      console.log("User saved to AsyncStorage",);
+
+    }catch(err){
+      console.log("Error saving user to asyncStorage",err);
+    }
+  }
+
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setEmailError(emailRegex.test(email) ? null : 'Invalid email address');
@@ -125,23 +135,25 @@ const LoginScreen = () => {
   const handleLogin = async () => {
     validateEmail();
     validatePassword();
-    validateFields();
-    if (!emailError && !passwordError && requiredFeilds) { // Check the truthiness of the validation errors
+    const areFieldsValid = validateFields();
+    if (!emailError && !passwordError && areFieldsValid) { // Check the truthiness of the validation errors
      
       try {
         setLoading(true);
-        console.log("trying login...")
+        // console.log("trying login...")
         const response = await axios.post(
           `https://sore-pear-seagull-gear.cyclic.app/api/users/login`,
           { email, password }
         );
         const apiToken = response.data.token;
         setToken(apiToken);
+        // console.log("user=>",response.data.user);
+        savedUserAsyncStorage(response.data.user);
         savedTokenToAsyncStorage(apiToken);
         setLoading(false)
         navigation.navigate("Home");
         console.log(`Login successfully`);
-        console.log('Token:',apiToken);
+        // console.log('Token:',apiToken);
       } catch (err) {
         const status = err.response.status;
         const message = err.response.data.message;

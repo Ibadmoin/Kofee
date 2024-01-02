@@ -28,13 +28,17 @@ import Loader from '../components/loader';
 import SearchBox from '../components/SearchBox';
 import NotFound from '../components/NotFound';
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserAvatar from 'react-native-user-avatar';
+import { getUser } from '../globalFunctions/getSavedUser';
 
 const {width, height} = Dimensions.get('window');
 export default function ItemScreen({route}) {
   const {queryItem, queryItemName} = route.params;
   const [data, setData] = useState(null);
   const [loading, setloading] = useState(false);
+  const [userName, setUserName]= useState(null);
+  const [user, setUser]= useState(null);
   const navigation = useNavigation();
 
 
@@ -62,11 +66,27 @@ export default function ItemScreen({route}) {
         setloading(false)
       }
     }
+
+
+    const fetchUserData = async()=>{
+      const userData = await getUser();
+      setUser(userData);
+    }
     
  
+    fetchUserData();
 
     fetchData();
   }, [queryItemName]);
+
+
+  useEffect(()=>{
+
+    if (user !== null){
+      setUserName(user.userName);
+    }
+
+  },[user])
 
   return (
     <View>
@@ -80,10 +100,8 @@ export default function ItemScreen({route}) {
       {/* safe area view */}
       <SafeAreaView>
         <View className="mt-2 mx-4 flex-row justify-between items-center  ">
-          <Image
-            className="h-9 w-9 rounded-full "
-            source={require('../assets/images/avatar.png')}
-          />
+        <UserAvatar size={40} name={userName? userName:"K O"} />
+
           <View className="flex-row items-center space-x-2 ">
             {/* using svg for now */}
             <MapPinIcon size="25" color={themeColors.bgLight} />

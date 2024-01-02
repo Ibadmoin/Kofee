@@ -29,7 +29,9 @@ import {config} from 'dotenv';
 import SearchBox from '../components/SearchBox';
 import { Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import UserAvatar from 'react-native-user-avatar';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { getUser } from '../globalFunctions/getSavedUser';
 
 
 
@@ -38,7 +40,9 @@ export default function HomeScreen() {
   const [activeCategory, setActiveCategory] = useState(1);
   const [loader, setLoader] = useState(true);
   const [data, setData] = useState(null);
-  const [featuredData, setFeaturedData]= useState(null)
+  const [featuredData, setFeaturedData]= useState(null);
+  const [user, setUser]= useState(null);
+  const [userName, setUserName]= useState(null);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -57,15 +61,27 @@ export default function HomeScreen() {
       }
     };
 
+    const fetchUserData = async()=>{
+      const userData = await getUser();
+      setUser(userData)
+    }
+
+    fetchUserData();
+
     fetchData();
   },[]);
 useEffect(()=>{
 
-  console.log("featuredData=>",featuredData)
-},[featuredData]);
+  console.log("userData=>",user);
+  if(user !== null){
+    setUserName(user.userName);
+  }
+ 
+},[user]);
 
 const handleLogout= async()=>{
   await AsyncStorage.removeItem('userToken');
+  await AsyncStorage.removeItem('User');
   navigation.navigate('Login');
 console.log('Login out successfully',AsyncStorage.getItem('userToken'));
 }
@@ -77,6 +93,7 @@ console.log('Login out successfully',AsyncStorage.getItem('userToken'));
     <View>
           
       <StatusBar />
+    
       <Image
         source={require('../assets/images/beansBackground1.png')}
         style={{height: height * 0.28}}
@@ -85,11 +102,12 @@ console.log('Login out successfully',AsyncStorage.getItem('userToken'));
 
       <SafeAreaView>
         <View className="mt-2 mx-4  flex-row justify-between items-center  ">
-          <Image 
+          {/* <Image 
           onPress={handleLogout}
             className="h-9 w-9 rounded-full "
             source={require('../assets/images/avatar.png')}
-          />
+          /> */}
+          <UserAvatar size={40} name={userName? userName:"K O"} />
           <View className="flex-row items-center space-x-2 ">
             {/* using svg for now */}
             <MapPinIcon  size="25" color={themeColors.bgLight} />
